@@ -1,0 +1,83 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    background: #34495e;
+}
+
+.MazeGeneratorVisualizer
+{
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
+.node-path
+{
+    background-color: yellow;
+}
+
+.visualGridContainer .gridBox
+{
+    min-width: 80%;
+    max-width: 80%;
+    margin: 5px auto;
+
+    user-select: none; /* I am using this to make the MouseUp and Mouse Down smooth as it tells the browser that the object can be selected  */
+
+    border: 2px solid black;
+}
+
+input
+{
+    width: 40px;
+    height: 20px;
+    margin: 0 5px 0 5px;
+    padding: 0 10px;
+
+    color: #fff;
+    background-color: transparent;
+}
+
+/* Responsiveness */
+
+@media(max-width:780px)
+{
+    body
+    {
+        background-color: #34495e;
+    }
+    .visualGridContainer .gridBox
+    {
+        min-width: 200%;
+        max-width: 200%;
+        margin: 5px auto;
+
+        border: 2px solid black;
+        background-color: #fff;
+    }
+
+    .MazeGeneratorVisualizer .container
+    {
+        min-width: 200%;
+        max-width: 200%;
+        padding: auto;
+
+        color: #fff;
+        background-color: #34495e;
+    }
+
+    .ref::before
+    {
+        font-weight: bold;
+
+        content: '(View on Lanscape Mode) ';
+
+        color: #fff;
+    }
+}

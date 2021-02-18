@@ -1,0 +1,160 @@
+table
+{
+    border-collapse: collapse;
+
+    background-color: #fff;
+}
+
+.node
+{
+    box-sizing: border-box;
+
+    border: none;
+    /* Using inline block as we are storing every row in a separate div */
+    background: black;
+}
+
+.node:hover
+{
+    transform: scale(1.2);
+
+    box-shadow: 0 0 10px #00b3ff,
+    0 0 20px #00b3ff,
+    0 0 40px #00b3ff,
+    0 0 80px #00b3ff,
+    0 0 120px #00b3ff;
+}
+
+.dimension
+{
+    width: 20px;
+    height: 20px;
+}
+.topWall
+{
+    border-top: 1px solid black;
+}
+.rightWall
+{
+    border-right: 1px solid black;
+}
+.bottomWall
+{
+    border-bottom: 1px solid black;
+}
+.leftWall
+{
+    border-left: 1px solid black;
+}
+
+.node-start
+{
+    background-color: rgb(233, 30, 30);
+    background-position: center;
+    background-size: cover;
+}
+
+.node-finish
+{
+    background-color: rgb(141, 243, 82);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.node-visited
+{
+    animation-name: visitedAnimation;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+
+    animation-fill-mode: forwards;
+}
+@keyframes visitedAnimation
+{
+    0%
+    {
+        background-color: rgba(0, 0, 66, .75);
+    }
+
+    50%
+    {
+        background-color: rgba(17, 104, 217, .75);
+    }
+
+    75%
+    {
+        transform: scale(1.2);
+
+        background-color: #00b3ff;
+    }
+
+    100%
+    {
+        transform: scale(1);
+
+        background-color: #fff;
+    }
+}
+
+.RevisitedNode
+{
+    animation-name: RevisitedNodeAnimation;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+
+    animation-fill-mode: forwards;
+}
+@keyframes RevisitedNodeAnimation
+{
+    0%
+    {
+        background-color: rgba(0, 0, 66, .75);
+    }
+
+    50%
+    {
+        background-color: rgba(17, 104, 217, .75);
+    }
+
+    75%
+    {
+        transform: scale(1.2);
+
+        background-color: #00b3ff;
+    }
+
+    100%
+    {
+        transform: scale(1);
+
+        background-color: #fff;
+    }
+}
+
+
+.node-path
+{
+    animation-name: shortestPathAnimation;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+
+    animation-fill-mode: forwards;
+}
+@keyframes shortestPathAnimation
+{
+    0%
+    {
+        background-color: rgba(69, 240, 92, .842);
+    }
+
+    55%
+    {
+        background-color: rgba(104, 163, 230, .75);
+    }
+
+    100%
+    {
+        background-color: #00b3ff;
+    }
+}
