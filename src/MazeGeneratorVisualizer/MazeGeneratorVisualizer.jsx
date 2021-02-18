@@ -20,7 +20,7 @@ export default class PathfindingVisualizer extends Component {
     this.state = {
       grid: [],
       errorMessage: "",
-      dragNode : "normal",
+      dragNode: "normal",
       mazeGenerationSpeed: 10,
       points: {
         start: {
@@ -85,7 +85,7 @@ export default class PathfindingVisualizer extends Component {
 
         if (nodeElement.classList.contains("node-finish")) {
           console.log("Finish");
-        }else if (nodeElement.classList.contains("node-start")) {
+        } else if (nodeElement.classList.contains("node-start")) {
           console.log("Finish");
         } else if (nodeElement.classList.contains("node-visited")) {
           nodeElement.classList.remove("node-visited");
@@ -221,36 +221,35 @@ export default class PathfindingVisualizer extends Component {
       },
     });
   };
-  
+
   // On pressing the mouse down
   handleMouseDown(row, col) {
-    if(this.state.grid[row][col].isStart){
-      this.setState({dragNode : "start"});
-    }else if(this.state.grid[row][col].isFinish){
-      this.setState({dragNode : "finish"});
-    }else{
-      this.setState({dragNode : "normal"})
+    if (this.state.grid[row][col].isStart) {
+      this.setState({ dragNode: "start" });
+    } else if (this.state.grid[row][col].isFinish) {
+      this.setState({ dragNode: "finish" });
+    } else {
+      this.setState({ dragNode: "normal" });
     }
   }
 
   // When we release the mouse
-  handleMouseUp(row,col) {
+  handleMouseUp(row, col) {
     let start_row = this.state.points.start.row;
-    let   start_col = this.state.points.start.col;
-    let   finish_row = this.state.points.finish.row;
-    let   finish_col = this.state.points.finish.col;
-    
-    if(this.state.dragNode === "start"){
+    let start_col = this.state.points.start.col;
+    let finish_row = this.state.points.finish.row;
+    let finish_col = this.state.points.finish.col;
+
+    if (this.state.dragNode === "start") {
       start_row = row;
       start_col = col;
-      
-    }else if(this.state.dragNode === "finish"){    
+    } else if (this.state.dragNode === "finish") {
       finish_row = row;
       finish_col = col;
-    }else{
-      return
+    } else {
+      return;
     }
-    
+
     const newGrid = getGrid(
       this.state.length.row,
       this.state.length.col,
@@ -274,7 +273,12 @@ export default class PathfindingVisualizer extends Component {
         },
       },
     });
-    }
+
+    document.getElementById("start_row").value = start_row;
+    document.getElementById("start_col").value = start_col;
+    document.getElementById("end_row").value = finish_row;
+    document.getElementById("end_col").value = finish_col;
+  }
 
   render() {
     const { grid } = this.state;
@@ -338,28 +342,34 @@ export default class PathfindingVisualizer extends Component {
         <button onClick={this.visualizeMazeGeneration}> Maze </button>
         <button onClick={this.animateShortestPath}> Shortest Path </button>
         <button onClick={exportPdf}> Export </button>
+        <label htmlFor="heightSlider"> Height : </label>
         <input
-          type="number"
+          type="range"
           id="row_length"
           min="0"
+          max = "50"
+          name = "heightSlider"
           onChange={this.lengthChangeHandler}
           defaultValue={this.state.length.row}
         ></input>
+        <label htmlFor="widthSlider"> Width : </label>
         <input
-          type="number"
+          type="range"
           id="col_length"
           min="0"
+          max = "50"
+          name = "widthSlider"
           onChange={this.lengthChangeHandler}
           defaultValue={this.state.length.col}
         ></input>
         <div className="slidecontainer">
-          <label htmlFor="slider"> Maze Generation Speed: </label>
+          <label htmlFor="speedSlider"> Maze Generation Speed: </label>
           <input
             type="range"
             min="1"
             max="20"
             defaultValue="10"
-            name="slider"
+            name="speedSlider"
             id="mazeSpeedRange"
             onChange={this.speedChangeHandler}
           />
@@ -384,10 +394,7 @@ export default class PathfindingVisualizer extends Component {
                   return (
                     <tr key={rowIndex}>
                       {row.map((node, nodeIndex) => {
-                        const {
-                          isStart,
-                          isFinish
-                        } = node; //Extracting from the node
+                        const { isStart, isFinish } = node; //Extracting from the node
                         return (
                           <Node
                             row={rowIndex}
@@ -395,11 +402,12 @@ export default class PathfindingVisualizer extends Component {
                             key={rowIndex + "-" + nodeIndex}
                             isStart={isStart}
                             isFinish={isFinish}
-
                             onMouseDown={(row, col) =>
                               this.handleMouseDown(row, col)
                             }
-                            onMouseUp={(row, col) => this.handleMouseUp(row, col)}
+                            onMouseUp={(row, col) =>
+                              this.handleMouseUp(row, col)
+                            }
                           ></Node>
                         );
                       })}
