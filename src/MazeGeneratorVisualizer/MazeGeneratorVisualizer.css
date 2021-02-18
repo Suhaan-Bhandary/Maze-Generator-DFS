@@ -1,83 +1,156 @@
-*
-{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-body
-{
-    background: #34495e;
+body{
+    background-color : #152f49;
+}
+/* All Header CSS */
+.header {
+    padding-top: 30px;
+    width: 100%;
+    height: 100px;
+
+    background-color: #152f49;
+
+    display: flex;
+    justify-content: space-between;
 }
 
-.MazeGeneratorVisualizer
-{
-    min-width: 100%;
-    max-width: 100%;
-    min-height: 100vh;
-    max-height: 100vh;
-}
-
-.node-path
-{
-    background-color: yellow;
-}
-
-.visualGridContainer .gridBox
-{
-    min-width: 80%;
-    max-width: 80%;
-    margin: 5px auto;
-
-    user-select: none; /* I am using this to make the MouseUp and Mouse Down smooth as it tells the browser that the object can be selected  */
-
-    border: 2px solid black;
-}
-
-input
-{
-    width: 40px;
-    height: 20px;
-    margin: 0 5px 0 5px;
-    padding: 0 10px;
-
+.header .appName {
+    margin: 0 10px;
     color: #fff;
-    background-color: transparent;
+    text-shadow: 0 0 10px #00b3ff,
+        0 0 20px #00b3ff,
+        0 0 40px #00b3ff,
+        0 0 80px #00b3ff,
+        0 0 120px #00b3ff;
+    line-height: 20px;
 }
 
-/* Responsiveness */
+.header .buttonContainer {
+    position: relative;
+    display: flex;
+    height: 50%;
+    margin-right: 30px;
+}
 
-@media(max-width:780px)
-{
-    body
-    {
-        background-color: #34495e;
+.header .buttonContainer button {
+    margin: 0 10px;
+    width: 100px;
+    position: relative;
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 15px;
+    font-weight: 600;
+
+    background-color: #48c9b0;
+    border-color: #48c9b0;
+
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.header .buttonContainer button:hover{
+    transform: scale(1.3) translateY(-1px);
+    border : 1px solid #eee;
+}
+
+/* All Maze Menu CSS */
+.navigation{
+    position : fixed;
+    width : 60px;
+    height : 100%;
+    top : 100px;
+    left : 0;
+    background-color : #152f49;
+    transition-delay: 0.1s;
+    transition-duration : 0.5s;
+}
+.navigation:hover,.navigation.active{
+    width : 300px;
+}
+
+.navigation ul{
+    position : absolute;
+    top : 0;
+    left : 0;
+    width : 100%;
+}
+
+.navigation ul li{
+    position : relative;
+    width : 100%;
+    list-style : none;
+}
+
+.navigation ul li div{
+    position : relative;
+    width : 100%;
+    display: flex;
+    text-decoration: none;
+    color : #fff;
+    overflow : hidden;
+}
+
+.navigation ul li div .icon{
+    position: relative;
+    display : block;
+    min-width : 60px;
+    height : 60px;
+    line-height : 60px;
+    text-align : center;
+}
+
+.navigation ul li div .title{
+    position : relative;
+    display : flex;
+    flex-direction : column;
+    padding : 0 10px;
+    line-height : 60px;
+    text-align : start;
+    white-space : nowrap;
+}
+
+.toggle{
+    position : fixed;
+    top : 100px;
+    right : 0;
+    visibility: hidden;
+    width : 70px;
+    cursor : pointer;
+    color : #000;
+    font-size : 20px;
+    padding : 10px;
+}
+.toggle:hover{
+    background-color : #eee;
+}
+
+@media (max-width: 768px){
+    .navigation{
+        left : -60px;
     }
-    .visualGridContainer .gridBox
-    {
-        min-width: 200%;
-        max-width: 200%;
-        margin: 5px auto;
-
-        border: 2px solid black;
-        background-color: #fff;
+    .navigation.navigation.active{
+        left : 0;
     }
 
-    .MazeGeneratorVisualizer .container
-    {
-        min-width: 200%;
-        max-width: 200%;
-        padding: auto;
-
+    .toggle{
         color: #fff;
-        background-color: #34495e;
+        visibility: visible;
+        
     }
+}
 
-    .ref::before
-    {
-        font-weight: bold;
-
-        content: '(View on Lanscape Mode) ';
-
-        color: #fff;
-    }
+/* The Main Grid */
+.mazeContainer{
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    position: absolute;
+    top : 100px;
+    left : 60px;
+    z-index: -1;
+    margin: 5px;
 }

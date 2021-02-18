@@ -11,8 +11,7 @@ import {
 } from "../algorithms/dfsRecursive.js";
 
 import "./MazeGeneratorVisualizer.css";
-
-// Defining initial state of start and finish.
+import "./MazeGrid.css";
 
 export default class PathfindingVisualizer extends Component {
   constructor(props) {
@@ -33,7 +32,7 @@ export default class PathfindingVisualizer extends Component {
         },
       },
       length: {
-        row: 25,
+        row: 27,
         col: 50,
       },
     };
@@ -281,142 +280,141 @@ export default class PathfindingVisualizer extends Component {
   }
 
   render() {
-    const { grid } = this.state;
-
-    let textBox = (
-      <div className="textBox">
-        <div className="startPointContainer">
-          <label htmlFor="point"> Start Point: </label>
-          <input
-            type="number"
-            name="point"
-            id="start_row"
-            min="0"
-            max={this.state.length.row - 1}
-            onChange={this.pointChangeHandler}
-            defaultValue={this.state.points.start.row}
-          ></input>
-          <input
-            type="number"
-            name="point"
-            id="start_col"
-            min="0"
-            max={this.state.length.col - 1}
-            onChange={this.pointChangeHandler}
-            defaultValue={this.state.points.start.col}
-          ></input>
-        </div>
-        <div className="endPointContainer">
-          <label htmlFor="point"> End Point: </label>
-          <input
-            type="number"
-            name="point"
-            id="end_row"
-            min="0"
-            max="50"
-            onChange={this.pointChangeHandler}
-            defaultValue={this.state.points.finish.row}
-          ></input>
-          <input
-            type="number"
-            name="point"
-            id="end_col"
-            min="0"
-            max="50"
-            onChange={this.pointChangeHandler}
-            defaultValue={this.state.points.finish.col}
-          ></input>
-        </div>
-        <p
-          style={{
-            color: "red",
-          }}
-        >
-          {this.state.errorMessage}
-        </p>
-      </div>
-    );
-
     return (
       <div className="MazeGeneratorVisualizer">
-        <button onClick={this.visualizeMazeGeneration}> Maze </button>
-        <button onClick={this.animateShortestPath}> Shortest Path </button>
-        <button onClick={exportPdf}> Export </button>
-        <label htmlFor="heightSlider"> Height : </label>
-        <input
-          type="range"
-          id="row_length"
-          min="1"
-          max = "50"
-          name = "heightSlider"
-          onChange={this.lengthChangeHandler}
-          defaultValue={this.state.length.row}
-        ></input>
-        <label htmlFor="widthSlider"> Width : </label>
-        <input
-          type="range"
-          id="col_length"
-          min="1"
-          max = "50"
-          name = "widthSlider"
-          onChange={this.lengthChangeHandler}
-          defaultValue={this.state.length.col}
-        ></input>
-        <div className="slidecontainer">
-          <label htmlFor="speedSlider"> Maze Generation Speed: </label>
-          <input
-            type="range"
-            min="1"
-            max="20"
-            defaultValue="10"
-            name="speedSlider"
-            id="mazeSpeedRange"
-            onChange={this.speedChangeHandler}
-          />
-        </div>
-        {textBox}
-        <div
-          className="visualGridContainer"
-          style={{
-            padding: "50px",
-          }}
-          id="pdfBox"
-        >
-          <div className="gridBox">
-            <table
-              className="grid"
-              style={{
-                borderSpacing: "0",
-              }}
-            >
-              <tbody>
-                {grid.map((row, rowIndex) => {
-                  return (
-                    <tr key={rowIndex}>
-                      {row.map((node, nodeIndex) => {
-                        const { isStart, isFinish } = node; //Extracting from the node
-                        return (
-                          <Node
-                            row={rowIndex}
-                            col={nodeIndex}
-                            key={rowIndex + "-" + nodeIndex}
-                            isStart={isStart}
-                            isFinish={isFinish}
-                            onMouseDown={(row, col) =>
-                              this.handleMouseDown(row, col)
-                            }
-                            onMouseUp={(row, col) =>
-                              this.handleMouseUp(row, col)
-                            }
-                          ></Node>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+        <div className="header">
+          <h1 className="appName">Maze Generator</h1>
+          <div className="buttonContainer">
+            <button onClick={this.visualizeMazeGeneration}> Maze </button>
+            <button onClick={this.animateShortestPath}> Path </button>
+            <button onClick={exportPdf}> Export </button>
           </div>
+        </div>
+
+        <div className="navigation">
+          <ul>
+            <li>
+              <div>
+                <span className="icon">Menu</span>
+                <div className="title">
+                  <label htmlFor="heightSlider"> Height : </label>
+                  <input
+                    type="range"
+                    id="row_length"
+                    min="1"
+                    max="50"
+                    name="heightSlider"
+                    onChange={this.lengthChangeHandler}
+                    defaultValue={this.state.length.row}
+                  ></input>
+
+                  <label htmlFor="widthSlider"> Width : </label>
+                  <input
+                    type="range"
+                    id="col_length"
+                    min="1"
+                    max="50"
+                    name="widthSlider"
+                    onChange={this.lengthChangeHandler}
+                    defaultValue={this.state.length.col}
+                  ></input>
+
+                  <label htmlFor="speedSlider"> Maze Generation Speed: </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="20"
+                    defaultValue="10"
+                    name="speedSlider"
+                    id="mazeSpeedRange"
+                    onChange={this.speedChangeHandler}
+                  />
+
+                  <div className="startPointContainer">
+                    <label htmlFor="point"> Start Point: </label>
+                    <input
+                      type="number"
+                      name="point"
+                      id="start_row"
+                      min="0"
+                      max={this.state.length.row - 1}
+                      onChange={this.pointChangeHandler}
+                      defaultValue={this.state.points.start.row}
+                    ></input>
+                    <input
+                      type="number"
+                      name="point"
+                      id="start_col"
+                      min="0"
+                      max={this.state.length.col - 1}
+                      onChange={this.pointChangeHandler}
+                      defaultValue={this.state.points.start.col}
+                    ></input>
+                  </div>
+                  <div className="endPointContainer">
+                    <label htmlFor="point"> End Point: </label>
+                    <input
+                      type="number"
+                      name="point"
+                      id="end_row"
+                      min="0"
+                      max="50"
+                      onChange={this.pointChangeHandler}
+                      defaultValue={this.state.points.finish.row}
+                    ></input>
+                    <input
+                      type="number"
+                      name="point"
+                      id="end_col"
+                      min="0"
+                      max="50"
+                      onChange={this.pointChangeHandler}
+                      defaultValue={this.state.points.finish.col}
+                    ></input>
+                  </div>
+                  <p
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {this.state.errorMessage}
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div className="toggle" onClick={toggleMenu}>
+          Menu
+        </div>
+
+        <div className="mazeContainer">
+          <table className="maze">
+          <tbody>
+            {this.state.grid.map((row, rowIndex) => {
+              return (
+                <tr key={rowIndex}>
+                  {row.map((node, nodeIndex) => {
+                    const { isStart, isFinish } = node; //Extracting from the node
+                    return (
+                        <Node
+                          row={rowIndex}
+                          col={nodeIndex}
+                          key={rowIndex + "-" + nodeIndex}
+                          isStart={isStart}
+                          isFinish={isFinish}
+                          onMouseDown={(row, col) =>
+                            this.handleMouseDown(row, col)
+                          }
+                          onMouseUp={(row, col) => this.handleMouseUp(row, col)}
+                        ></Node>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+          </table>
         </div>
       </div>
     );
@@ -518,4 +516,14 @@ const exportPdf = () => {
     doc.addImage(imgData, 0, 12, 205, imgHeight);
     doc.save("maze.pdf");
   });
+};
+
+const toggleMenu = () => {
+  let navigation = document.querySelector(".navigation");
+  navigation.classList.toggle("active");
+
+  let toggle = document.querySelector(".toggle");
+  toggle.classList.toggle("active");
+
+  console.log(navigation);
 };
