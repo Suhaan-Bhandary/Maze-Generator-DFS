@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/Maze-Generator-DFS/static/css/main.66563e5a.chunk.css",
+    "main.js": "/Maze-Generator-DFS/static/js/main.0c926e81.chunk.js",
+    "main.js.map": "/Maze-Generator-DFS/static/js/main.0c926e81.chunk.js.map",
+    "runtime-main.js": "/Maze-Generator-DFS/static/js/runtime-main.53983fe4.js",
+    "runtime-main.js.map": "/Maze-Generator-DFS/static/js/runtime-main.53983fe4.js.map",
+    "static/js/2.571748d0.chunk.js": "/Maze-Generator-DFS/static/js/2.571748d0.chunk.js",
+    "static/js/2.571748d0.chunk.js.map": "/Maze-Generator-DFS/static/js/2.571748d0.chunk.js.map",
+    "static/js/3.4243815f.chunk.js": "/Maze-Generator-DFS/static/js/3.4243815f.chunk.js",
+    "static/js/3.4243815f.chunk.js.map": "/Maze-Generator-DFS/static/js/3.4243815f.chunk.js.map",
+    "static/js/4.54503cb2.chunk.js": "/Maze-Generator-DFS/static/js/4.54503cb2.chunk.js",
+    "static/js/4.54503cb2.chunk.js.map": "/Maze-Generator-DFS/static/js/4.54503cb2.chunk.js.map",
+    "static/js/5.729b238c.chunk.js": "/Maze-Generator-DFS/static/js/5.729b238c.chunk.js",
+    "static/js/5.729b238c.chunk.js.map": "/Maze-Generator-DFS/static/js/5.729b238c.chunk.js.map",
+    "index.html": "/Maze-Generator-DFS/index.html",
+    "static/css/main.66563e5a.chunk.css.map": "/Maze-Generator-DFS/static/css/main.66563e5a.chunk.css.map",
+    "static/js/2.571748d0.chunk.js.LICENSE.txt": "/Maze-Generator-DFS/static/js/2.571748d0.chunk.js.LICENSE.txt",
+    "static/js/3.4243815f.chunk.js.LICENSE.txt": "/Maze-Generator-DFS/static/js/3.4243815f.chunk.js.LICENSE.txt",
+    "static/js/4.54503cb2.chunk.js.LICENSE.txt": "/Maze-Generator-DFS/static/js/4.54503cb2.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.53983fe4.js",
+    "static/js/3.4243815f.chunk.js",
+    "static/css/main.66563e5a.chunk.css",
+    "static/js/main.0c926e81.chunk.js"
+  ]
+}
