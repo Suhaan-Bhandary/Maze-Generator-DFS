@@ -346,7 +346,7 @@ export default class PathfindingVisualizer extends Component {
         <input
           type="range"
           id="row_length"
-          min="0"
+          min="1"
           max = "50"
           name = "heightSlider"
           onChange={this.lengthChangeHandler}
@@ -356,7 +356,7 @@ export default class PathfindingVisualizer extends Component {
         <input
           type="range"
           id="col_length"
-          min="0"
+          min="1"
           max = "50"
           name = "widthSlider"
           onChange={this.lengthChangeHandler}
