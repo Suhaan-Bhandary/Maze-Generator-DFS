@@ -114,6 +114,12 @@ body{
     white-space : nowrap;
 }
 
+#start_row,#start_col,#end_row,#end_col{
+    height: 20px;
+    margin: 20px 4px;
+    padding-left: 2px;
+}
+
 .toggle{
     position : fixed;
     top : 100px;
