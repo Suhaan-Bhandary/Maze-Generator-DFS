@@ -387,14 +387,14 @@ export default class PathfindingVisualizer extends Component {
         </div>
 
         <div className="mazeContainer">
-          <table className="maze">
-          <tbody>
-            {this.state.grid.map((row, rowIndex) => {
-              return (
-                <tr key={rowIndex}>
-                  {row.map((node, nodeIndex) => {
-                    const { isStart, isFinish } = node; //Extracting from the node
-                    return (
+          <table className="maze" id="table">
+            <tbody>
+              {this.state.grid.map((row, rowIndex) => {
+                return (
+                  <tr key={rowIndex}>
+                    {row.map((node, nodeIndex) => {
+                      const { isStart, isFinish } = node; //Extracting from the node
+                      return (
                         <Node
                           row={rowIndex}
                           col={nodeIndex}
@@ -406,12 +406,12 @@ export default class PathfindingVisualizer extends Component {
                           }
                           onMouseUp={(row, col) => this.handleMouseUp(row, col)}
                         ></Node>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
       </div>
@@ -492,15 +492,32 @@ const notCorrectProperty = (row_max_length, col_max_length) => {
   return false;
 };
 
+const toggleMenu = () => {
+  let navigation = document.querySelector(".navigation");
+  navigation.classList.toggle("active");
+
+  let toggle = document.querySelector(".toggle");
+  toggle.classList.toggle("active");
+
+};
+
 // We export pdf from here.
 const exportPdf = () => {
   // We are storing the element from its id.
-  const element = document.getElementById("pdfBox");
+  const element = document.querySelector(".mazeContainer");
+
+
+  // This is to remove class revisitedNode as it was causing problem for html2canvas.
+  var table = document.getElementById("table"); // Get the table
+  for (var i = 0, row; (row = table.rows[i]); i++) {
+    for (var j = 0, cell; (cell = row.cells[j]); j++) {
+      cell.classList.remove("RevisitedNode");
+    }
+  }
 
   // html2canvas catures a screenshot or a picture and by using then we execute the function.
   html2canvas(element).then((canvas) => {
-    console.log(canvas);
-
+  
     // document.getElementById("canvas").appendChild(canvas); to test the canvas element.
 
     const imgData = canvas.toDataURL("image/png"); // Creating image or png.
@@ -514,14 +531,4 @@ const exportPdf = () => {
     doc.addImage(imgData, 0, 12, 205, imgHeight);
     doc.save("maze.pdf");
   });
-};
-
-const toggleMenu = () => {
-  let navigation = document.querySelector(".navigation");
-  navigation.classList.toggle("active");
-
-  let toggle = document.querySelector(".toggle");
-  toggle.classList.toggle("active");
-
-  console.log(navigation);
 };

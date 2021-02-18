@@ -146,6 +146,8 @@ body{
 
 /* The Main Grid */
 .mazeContainer{
+    user-select: none; /* I am using this to make the MouseUp and Mouse Down smooth as it tells the browser that the object can be selected  */
+
     border: 1px solid #fff;
     box-sizing: border-box;
     position: absolute;
