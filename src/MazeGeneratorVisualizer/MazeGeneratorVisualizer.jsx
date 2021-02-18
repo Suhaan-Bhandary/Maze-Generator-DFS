@@ -11,8 +11,6 @@ import {
 } from "../algorithms/dfsRecursive.js";
 
 import "./MazeGeneratorVisualizer.css";
-import "./MazeGrid.css";
-
 export default class PathfindingVisualizer extends Component {
   constructor(props) {
     super(props);
