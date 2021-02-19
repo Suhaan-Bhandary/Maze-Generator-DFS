@@ -70,7 +70,7 @@ body{
     transition-duration : 0.5s;
 }
 .navigation:hover,.navigation.active{
-    width : 300px;
+    width : 400px;
 }
 
 .navigation ul{
@@ -101,6 +101,7 @@ body{
     min-width : 60px;
     height : 60px;
     line-height : 60px;
+    font-size: 30px;
     text-align : center;
 }
 
@@ -108,11 +109,68 @@ body{
     position : relative;
     display : flex;
     flex-direction : column;
-    padding : 0 10px;
+    padding : 40px 10px;
     line-height : 60px;
     text-align : start;
     white-space : nowrap;
 }
+
+.navigation ul li div .About{
+    display: flex;
+    flex-direction : column;
+    word-wrap:normal;
+}
+
+.navigation ul li div .About .aboutHeading{
+    padding: 10px 0;
+    text-decoration: underline;
+    text-align-last: center;
+}
+.navigation ul li div .About .aboutDescription {
+    line-height: 20px;
+    font-size: 20px;
+    text-align: start;
+    margin: 20px 10px;
+    font-family: ui-rounded;
+}
+
+.navigation ul li div .About .aboutCreatorName {
+    text-align: right;
+    padding: 0 15px;
+}
+
+.navigation ul li div .About .aboutLinks
+{   color: #fff;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    margin: 30px 0 30px 0;
+    justify-content: center;
+
+}
+
+.navigation ul li div .About .aboutLinks a{
+    text-decoration: none;
+    font-size: 20px;
+    height: 50px;
+    width: 30%;
+    margin: 10px 0;
+}
+.aboutYoutube{
+    color: #FF0000;
+}
+
+.aboutLinkedin{
+    color: #0e76a8;
+}
+.aboutGithub{
+    color: #000;
+}
+.aboutGmail{
+    color : #fff;
+    margin-top: 12px;
+}
+
 
 #start_row,#start_col,#end_row,#end_col{
     height: 20px;
@@ -121,18 +179,19 @@ body{
 }
 
 .toggle{
+    font-size: 30px;
     position : fixed;
     top : 100px;
     right : 0;
     visibility: hidden;
     width : 70px;
     cursor : pointer;
-    color : #000;
-    font-size : 20px;
+    color : #fff;
+    font-size : 30px;
     padding : 10px;
 }
 .toggle:hover{
-    background-color : #eee;
+    color: #00b3ff;
 }
 
 @media (max-width: 768px){
@@ -144,9 +203,11 @@ body{
     }
 
     .toggle{
-        color: #fff;
         visibility: visible;
         
+    }
+    .navigation ul li div .icon{
+        display: none;
     }
 }
 

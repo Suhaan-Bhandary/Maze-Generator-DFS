@@ -11,30 +11,67 @@ import {
 } from "../algorithms/dfsRecursive.js";
 
 import "./MazeGeneratorVisualizer.css";
+
+import { VscSettings } from "react-icons/vsc";
+import { GrYoutube } from "react-icons/gr";
+import { FaLinkedin } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { SiGmail } from "react-icons/si";
+
+
 export default class PathfindingVisualizer extends Component {
   constructor(props) {
+    // USing this if else here beacause of the asyn nature 
+    // and how the set is updated,which restricts allowance of accessing the state.
     super(props);
-    this.state = {
-      grid: [],
-      errorMessage: "",
-      dragNode: "normal",
-      mazeGenerationSpeed: 10,
-      points: {
-        start: {
-          row: 12,
-          col: 0,
+    if( window.screen.width < 500 ){
+      this.state = {
+        grid: [],
+        errorMessage: "",
+        dragNode: "normal",
+        phase: "preMaze", // phases can be of three types : preMaze,Maze,postMaze
+        mazeGenerationSpeed: 10,
+        points: {
+          start: {
+            row: 12,
+            col: 0,
+          },
+          finish: {
+            row: 12,
+            col: 9,
+          },
         },
-        finish: {
-          row: 12,
-          col: 49,
+        length: {
+          row: 26,
+          col: 10,
         },
-      },
-      length: {
-        row: 27,
-        col: 50,
-      },
-    };
+      };
+          
+    }else{
+      this.state = {
+        grid: [],
+        errorMessage: "",
+        dragNode: "normal",
+        phase: "preMaze", // phases can be of three types : preMaze,Maze,postMaze
+        mazeGenerationSpeed: 10,
+        points: {
+          start: {
+            row: 12,
+            col: 0,
+          },
+          finish: {
+            row: 12,
+            col: 49,
+          },
+        },
+        length: {
+          row: 27,
+          col: 50,
+        },
+      };
+    }
   }
+    
 
   // Creating grid
   componentDidMount = () => {
@@ -52,6 +89,7 @@ export default class PathfindingVisualizer extends Component {
   };
 
   visualizeMazeGeneration = () => {
+    this.setState({ phase: "Maze" });
     const { grid } = this.state;
     const startNode =
       grid[this.state.points.start.row][this.state.points.start.col];
@@ -68,6 +106,7 @@ export default class PathfindingVisualizer extends Component {
     for (let i = 1; i < visitedNodesInOrder.length; i++) {
       setTimeout(() => {
         if (i === visitedNodesInOrder.length - 1) {
+          this.setState({ phase: "postMaze" });
           this.setState({
             grid: grid,
           });
@@ -278,112 +317,183 @@ export default class PathfindingVisualizer extends Component {
   }
 
   render() {
+    
+    let buttonContainer = <p>System Error !!!</p>;
+
+    if (this.state.phase === "preMaze") {
+      buttonContainer = (
+        <div className="buttonContainer">
+          <button onClick={this.visualizeMazeGeneration}> Maze </button>
+          <button onClick={exportPdf}> Screenshot </button>
+        </div>
+      );
+    } else if (this.state.phase === "Maze") {
+      buttonContainer = (
+        <div className="buttonContainer">
+          <button> Generating..</button>
+          <button onClick={exportPdf}> Screenshot </button>
+        </div>
+      );
+    } else if (this.state.phase === "postMaze") {
+      buttonContainer = (
+        <div className="buttonContainer">
+          <button onClick={this.animateShortestPath}> Path </button>
+          <button onClick={exportPdf}> Screenshot </button>
+        </div>
+      );
+    }
+
+    let actionContainer = <div></div>;
+    if (this.state.phase === "preMaze") {
+      actionContainer = (
+        <div className="title">
+          <label htmlFor="heightSlider"> Height : {this.state.length.row}</label>
+          <input
+            type="range"
+            id="row_length"
+            min="1"
+            max="50"
+            name="heightSlider"
+            onChange={this.lengthChangeHandler}
+            defaultValue={this.state.length.row}
+          ></input>
+
+          <label htmlFor="widthSlider"> Width : {this.state.length.col}</label>
+          <input
+            type="range"
+            id="col_length"
+            min="1"
+            max="50"
+            name="widthSlider"
+            onChange={this.lengthChangeHandler}
+            defaultValue={this.state.length.col}
+          ></input>
+
+          <label htmlFor="speedSlider"> Maze Generation Speed: </label>
+          <input
+            type="range"
+            min="1"
+            max="20"
+            defaultValue="10"
+            name="speedSlider"
+            id="mazeSpeedRange"
+            onChange={this.speedChangeHandler}
+          />
+
+          <div className="startPointContainer">
+            <label htmlFor="point"> Start Point: </label>
+            <input
+              type="number"
+              name="point"
+              id="start_row"
+              min="0"
+              max={this.state.length.row - 1}
+              onChange={this.pointChangeHandler}
+              defaultValue={this.state.points.start.row}
+            ></input>
+            <input
+              type="number"
+              name="point"
+              id="start_col"
+              min="0"
+              max={this.state.length.col - 1}
+              onChange={this.pointChangeHandler}
+              defaultValue={this.state.points.start.col}
+            ></input>
+          </div>
+
+          <div className="endPointContainer">
+            <label htmlFor="point"> End Point: </label>
+            <input
+              type="number"
+              name="point"
+              id="end_row"
+              min="0"
+              max="50"
+              onChange={this.pointChangeHandler}
+              defaultValue={this.state.points.finish.row}
+            ></input>
+            <input
+              type="number"
+              name="point"
+              id="end_col"
+              min="0"
+              max="50"
+              onChange={this.pointChangeHandler}
+              defaultValue={this.state.points.finish.col}
+            ></input>
+          </div>
+          <p
+            style={{
+              color: "red",
+            }}
+          >
+            {this.state.errorMessage}
+          </p>
+        </div>
+      );
+    } else {
+      actionContainer = (
+        <div className="About">
+          <h1 className="aboutHeading">About Me</h1>
+          <p className="aboutDescription">
+            As a child I always solved the mazes which were on the newspapers and also built them by hand on pages,
+            and when learning programming I thought how mazes are made and with the curiosity in mind my interest in programming grew more.
+            <br></br>
+            And because of it i feel every one should be curious about the things and how the happen.
+            And at last : This program runs using a simple DFSrecursive Algorithm,
+             one can take it as a refrence point and build using other algorithms.
+          </p>
+          <h3 className="aboutCreatorName">-Suhaan Bhandary</h3>
+          <div className="aboutLinks">
+            <a
+              href="https://www.youtube.com/channel/UCHfmmdKuRDmZ5EUzGdqI7-Q" target = "blank"
+              className="aboutYoutube"
+            >
+              <GrYoutube />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/suhaan-bhandary-5bb907205/" target = "blank"
+              className="aboutLinkedin"
+            >
+              <FaLinkedin/>
+            </a>
+            <a
+              href="https://github.com/Suhaan-Bhandary" target = "blank"
+              className="aboutGithub"
+            >
+              <FaGithub/>
+            </a>
+            <p
+              className="aboutGmail"
+            >
+              <SiGmail/> suhaanbhandary1@gmail.com
+              
+            </p>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="MazeGeneratorVisualizer">
         <div className="header">
           <h1 className="appName">Maze Generator</h1>
-          <div className="buttonContainer">
-            <button onClick={this.visualizeMazeGeneration}> Maze </button>
-            <button onClick={this.animateShortestPath}> Path </button>
-            <button onClick={exportPdf}> Export </button>
-          </div>
+          {buttonContainer}
         </div>
 
         <div className="navigation">
           <ul>
             <li>
               <div>
-                <span className="icon">Menu</span>
-                <div className="title">
-                  <label htmlFor="heightSlider"> Height : </label>
-                  <input
-                    type="range"
-                    id="row_length"
-                    min="1"
-                    max="50"
-                    name="heightSlider"
-                    onChange={this.lengthChangeHandler}
-                    defaultValue={this.state.length.row}
-                  ></input>
-
-                  <label htmlFor="widthSlider"> Width : </label>
-                  <input
-                    type="range"
-                    id="col_length"
-                    min="1"
-                    max="50"
-                    name="widthSlider"
-                    onChange={this.lengthChangeHandler}
-                    defaultValue={this.state.length.col}
-                  ></input>
-
-                  <label htmlFor="speedSlider"> Maze Generation Speed: </label>
-                  <input
-                    type="range"
-                    min="1"
-                    max="20"
-                    defaultValue="10"
-                    name="speedSlider"
-                    id="mazeSpeedRange"
-                    onChange={this.speedChangeHandler}
-                  />
-
-                  <div className="startPointContainer">
-                    <label htmlFor="point"> Start Point: </label>
-                    <input
-                      type="number"
-                      name="point"
-                      id="start_row"
-                      min="0"
-                      max={this.state.length.row - 1}
-                      onChange={this.pointChangeHandler}
-                      defaultValue={this.state.points.start.row}
-                    ></input>
-                    <input
-                      type="number"
-                      name="point"
-                      id="start_col"
-                      min="0"
-                      max={this.state.length.col - 1}
-                      onChange={this.pointChangeHandler}
-                      defaultValue={this.state.points.start.col}
-                    ></input>
-                  </div>
-                  <div className="endPointContainer">
-                    <label htmlFor="point"> End Point: </label>
-                    <input
-                      type="number"
-                      name="point"
-                      id="end_row"
-                      min="0"
-                      max="50"
-                      onChange={this.pointChangeHandler}
-                      defaultValue={this.state.points.finish.row}
-                    ></input>
-                    <input
-                      type="number"
-                      name="point"
-                      id="end_col"
-                      min="0"
-                      max="50"
-                      onChange={this.pointChangeHandler}
-                      defaultValue={this.state.points.finish.col}
-                    ></input>
-                  </div>
-                  <p
-                    style={{
-                      color: "red",
-                    }}
-                  >
-                    {this.state.errorMessage}
-                  </p>
-                </div>
+                <span className="icon"><VscSettings /></span>
+                {actionContainer}
               </div>
             </li>
           </ul>
         </div>
         <div className="toggle" onClick={toggleMenu}>
-          Menu
+        <VscSettings />
         </div>
 
         <div className="mazeContainer">
@@ -498,14 +608,12 @@ const toggleMenu = () => {
 
   let toggle = document.querySelector(".toggle");
   toggle.classList.toggle("active");
-
 };
 
 // We export pdf from here.
 const exportPdf = () => {
   // We are storing the element from its id.
   const element = document.querySelector(".mazeContainer");
-
 
   // This is to remove class revisitedNode as it was causing problem for html2canvas.
   var table = document.getElementById("table"); // Get the table
@@ -517,7 +625,6 @@ const exportPdf = () => {
 
   // html2canvas catures a screenshot or a picture and by using then we execute the function.
   html2canvas(element).then((canvas) => {
-  
     // document.getElementById("canvas").appendChild(canvas); to test the canvas element.
 
     const imgData = canvas.toDataURL("image/png"); // Creating image or png.
