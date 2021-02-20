@@ -17,6 +17,8 @@ import { GrYoutube } from "react-icons/gr";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
+import { TiTickOutline } from "react-icons/ti";
+import { ImCross } from "react-icons/im";
 
 
 export default class PathfindingVisualizer extends Component {
@@ -31,6 +33,7 @@ export default class PathfindingVisualizer extends Component {
         dragNode: "normal",
         phase: "preMaze", // phases can be of three types : preMaze,Maze,postMaze
         mazeGenerationSpeed: 10,
+        animationState : true,
         points: {
           start: {
             row: 12,
@@ -54,6 +57,7 @@ export default class PathfindingVisualizer extends Component {
         dragNode: "normal",
         phase: "preMaze", // phases can be of three types : preMaze,Maze,postMaze
         mazeGenerationSpeed: 10,
+        animationState : true,
         points: {
           start: {
             row: 12,
@@ -103,47 +107,91 @@ export default class PathfindingVisualizer extends Component {
   };
 
   animateMazeGeneration(visitedNodesInOrder, grid) {
-    for (let i = 1; i < visitedNodesInOrder.length; i++) {
-      setTimeout(() => {
-        if (i === visitedNodesInOrder.length - 1) {
-          this.setState({ phase: "postMaze" });
-          this.setState({
-            grid: grid,
-          });
-        }
-
-        const node = visitedNodesInOrder[i];
-        const nodeElement = document.getElementById(
-          `node-${node.row}-${node.col}`
-        );
-
-        nodeElement.classList.remove("node");
-
-        if (nodeElement.classList.contains("node-finish")) {
-          console.log("Finish");
-        } else if (nodeElement.classList.contains("node-start")) {
-          console.log("Finish");
-        } else if (nodeElement.classList.contains("node-visited")) {
-          nodeElement.classList.remove("node-visited");
-          nodeElement.classList.add("RevisitedNode");
-        } else {
-          nodeElement.classList.add("node-visited"); // Initializing if not visited yet.
-        }
-
-        if (node.topWall) {
-          nodeElement.classList.add("topWall");
-        }
-        if (node.rightWall) {
-          nodeElement.classList.add("rightWall");
-        }
-        if (node.bottomWall) {
-          nodeElement.classList.add("bottomWall");
-        }
-        if (node.leftWall) {
-          nodeElement.classList.add("leftWall");
-        }
-      }, (300 * i) / this.state.mazeGenerationSpeed);
+    if(this.state.animationState){
+      for (let i = 1; i < visitedNodesInOrder.length; i++) {
+        setTimeout(() => {
+          if (i === visitedNodesInOrder.length - 1) {
+            this.setState({ phase: "postMaze" });
+            this.setState({
+              grid: grid,
+            });
+          }
+  
+          const node = visitedNodesInOrder[i];
+          const nodeElement = document.getElementById(
+            `node-${node.row}-${node.col}`
+          );
+  
+          nodeElement.classList.remove("node");
+  
+          if (nodeElement.classList.contains("node-finish")) {
+            console.log("Finish");
+          } else if (nodeElement.classList.contains("node-start")) {
+            console.log("Finish");
+          } else if (nodeElement.classList.contains("node-visited")) {
+            nodeElement.classList.remove("node-visited");
+            nodeElement.classList.add("RevisitedNode");
+          } else {
+            nodeElement.classList.add("node-visited"); // Initializing if not visited yet.
+          }
+  
+          if (node.topWall) {
+            nodeElement.classList.add("topWall");
+          }
+          if (node.rightWall) {
+            nodeElement.classList.add("rightWall");
+          }
+          if (node.bottomWall) {
+            nodeElement.classList.add("bottomWall");
+          }
+          if (node.leftWall) {
+            nodeElement.classList.add("leftWall");
+          }
+        }, (300 * i) / this.state.mazeGenerationSpeed);
+      }
     }
+    else{
+      for (let i = 1; i < visitedNodesInOrder.length; i++) {
+          if (i === visitedNodesInOrder.length - 1) {
+            this.setState({ phase: "postMaze" });
+            this.setState({
+              grid: grid,
+            });
+          }
+  
+          const node = visitedNodesInOrder[i];
+          const nodeElement = document.getElementById(
+            `node-${node.row}-${node.col}`
+          );
+  
+          nodeElement.classList.remove("node");
+  
+          if (nodeElement.classList.contains("node-finish")) {
+            console.log("Finish");
+          } else if (nodeElement.classList.contains("node-start")) {
+            console.log("Finish");
+          } else if (nodeElement.classList.contains("node-visited")) {
+            nodeElement.classList.remove("node-visited");
+            nodeElement.classList.add("RevisitedNode");
+          } else {
+            nodeElement.classList.add("node-visited"); // Initializing if not visited yet.
+          }
+  
+          if (node.topWall) {
+            nodeElement.classList.add("topWall");
+          }
+          if (node.rightWall) {
+            nodeElement.classList.add("rightWall");
+          }
+          if (node.bottomWall) {
+            nodeElement.classList.add("bottomWall");
+          }
+          if (node.leftWall) {
+            nodeElement.classList.add("leftWall");
+          }
+      }
+    }
+    
   }
 
   // Use to get or visualize the shortest path.
@@ -258,6 +306,10 @@ export default class PathfindingVisualizer extends Component {
     });
   };
 
+  animationStateChangeHandler = () => {
+    this.setState({animationState:!this.state.animationState})
+  }
+
   // On pressing the mouse down
   handleMouseDown(row, col) {
     if (this.state.grid[row][col].isStart) {
@@ -319,6 +371,13 @@ export default class PathfindingVisualizer extends Component {
   render() {
     
     let buttonContainer = <p>System Error !!!</p>;
+
+    let animationStateChangerButton = 
+    (<button onClick={this.animationStateChangeHandler} style={{color:"#fff",backgroundColor:"#25D366",width:"100px",height:"30px",border:"1px solid #fff"}}>Animation <TiTickOutline/></button>);
+    if(this.state.animationState === false){
+      animationStateChangerButton = 
+      (<button onClick={this.animationStateChangeHandler} style={{color:"#fff",backgroundColor:"#FF0000",width:"100px",height:"30px",border:"1px solid #fff"}}>Animation <ImCross/></button>);
+    }
 
     if (this.state.phase === "preMaze") {
       buttonContainer = (
@@ -423,6 +482,8 @@ export default class PathfindingVisualizer extends Component {
               defaultValue={this.state.points.finish.col}
             ></input>
           </div>
+            {animationStateChangerButton}
+
           <p
             style={{
               color: "red",
@@ -437,9 +498,9 @@ export default class PathfindingVisualizer extends Component {
         <div className="About">
           <h1 className="aboutHeading">About Me</h1>
           <p className="aboutDescription">
-            As a child I always solved the mazes which were on the newspapers and also built them by hand on pages,
-            and when learning programming I thought how mazes are made and with the curiosity in mind my interest in programming grew more.
-            <br></br>
+            As a child I always solved mazes which were on the newspapers and also built them by hand on notebook pages,
+            and when learning programming I thought how mazes are created and with curiosity in mind my interest in programming grew more.
+            <br/>
             And because of it i feel every one should be curious about the things and how the happen.
             And at last : This program runs using a simple DFSrecursive Algorithm,
              one can take it as a refrence point and build using other algorithms.
