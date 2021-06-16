@@ -312,6 +312,11 @@ export default class PathfindingVisualizer extends Component {
 
   // On pressing the mouse down
   handleMouseDown(row, col) {
+    if(this.state.phase !== "preMaze") {
+      console.log("this is premaze")
+      return;
+    };
+
     if (this.state.grid[row][col].isStart) {
       this.setState({ dragNode: "start" });
     } else if (this.state.grid[row][col].isFinish) {
@@ -323,11 +328,15 @@ export default class PathfindingVisualizer extends Component {
 
   // When we release the mouse
   handleMouseUp(row, col) {
+    // Check condition to see if the maze is running or not.
+    if(this.state.phase !== "preMaze")return;
+
     let start_row = this.state.points.start.row;
     let start_col = this.state.points.start.col;
     let finish_row = this.state.points.finish.row;
     let finish_col = this.state.points.finish.col;
 
+    // Changing the value of start and end not depending on the mouse drag
     if (this.state.dragNode === "start") {
       start_row = row;
       start_col = col;
