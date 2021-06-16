@@ -674,7 +674,7 @@ const toggleMenu = () => {
 // We export pdf from here.
 const exportPdf = () => {
   // We are storing the element from its id.
-  const element = document.querySelector(".mazeContainer");
+  const element = document.querySelector(".maze");
 
   // Changing the border.
   element.style.border = "1px solid black"
