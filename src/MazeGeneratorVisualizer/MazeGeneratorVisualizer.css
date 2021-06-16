@@ -206,6 +206,7 @@ body {
 
   .toggle {
     visibility: visible;
+    z-index: 1000;
   }
   .navigation ul li div .icon {
     display: none;
