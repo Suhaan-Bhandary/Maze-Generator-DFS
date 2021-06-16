@@ -71,6 +71,7 @@ body {
 .navigation:hover,
 .navigation.active {
   width: 400px;
+  z-index: 1000;
 }
 
 .navigation ul {
@@ -220,6 +221,6 @@ body {
   position: absolute;
   top: 100px;
   left: 60px;
-  z-index: -1;
+  z-index: 900;
   margin: 5px;
 }

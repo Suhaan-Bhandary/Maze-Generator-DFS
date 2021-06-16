@@ -696,7 +696,7 @@ const exportPdf = () => {
     const doc = new jspdf();
 
     // doc.addImage(imgData,imgPositionX,imgPositionY,width,height);
-    const imgHeight = (canvas.height * 205) / canvas.width;
+    const imgHeight = (canvas.height * 205) / canvas.width + 20;
     doc.text("Maze Generator - Suhaan", 50, 10);
 
     doc.addImage(imgData, 2, 12, 205, imgHeight);
